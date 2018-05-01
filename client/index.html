@@ -1,0 +1,27 @@
+<html>
+    <head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    </head>
+    <body ng-app="myApp" ng-controller="myController">
+Score is {{data}}
+    </body>
+    <script>
+    var app = angular.module("myApp",[]);
+    app.controller("myController",function($scope){
+        console.log("SSE");
+
+var sse = new EventSource("http://localhost:3001/api/records");
+sse.addEventListener('message',function(evt){
+//console.log("The data is ",evt)
+
+$scope.$apply(function(){
+    $scope.data = JSON.parse(evt.data)
+})
+
+
+},false);
+
+
+    })
+    </script>
+</html>
